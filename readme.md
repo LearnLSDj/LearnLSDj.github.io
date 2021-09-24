@@ -1,4 +1,4 @@
-# [Getting started with LSDj with Infu](LearnLSDj.github.io)
+# [Getting started with LSDj with Infu](https://learnlsdj.github.io/)
 
 **"Getting started with LSDj with Infu"** - future-proof ultimate guide based on LSDjv9
 
