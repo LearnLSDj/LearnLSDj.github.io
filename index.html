@@ -1,0 +1,706 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Getting started with LSDj with Infu</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.underline {
+	border-bottom: 0.15em solid orange;
+}
+
+ul.toc > li {
+	list-style: none;
+}
+
+.nospace {
+	white-space: normal;
+}
+
+</style></head><body><article class="page sans"><header><div class="page-header-icon undefined"><span class="icon">💾</span></div><h1 class="page-title">Getting started with LSDj with Infu</h1></header><div class="page-body"><figure class="link-to-page"><a href="https://github.com/LearnLSDj/LearnLSDj.github.io/archive/refs/heads/master.zip"><span class="icon">💾</span>Download this guide to read offline (.zip)</a></figure><h2>Table of Contents</h2><ul class="toc"><li><a href="#01">01. Requirements & Setting up</a></li><li><a href="#02">02. Gameboy basics</a></li><li><a href="#03">03. Sequencer, the basic controls</a></li><li><a href="#04">04. Adjusting our first sound</a></li><li><a href="#05">05. Understanding "Commands"</a></li><li><a href="#06">06. Let's make some noise in the NOISE CHANNEL!</a></li><li><a href="#07">07. "Well, well, well. How the turn-TABLES…"</a></li><li><a href="#08">08. Working with Instruments</a></li><li><a href="#09">09. Creating your first WAV KICK</a></li><li><a href="#10">10. Sound synthesis</a></li><li><a href="#11">11. "Can I make music now?"</a></li><li><a href="#12">12. Where to learn more</a></li><li><a href="#13">13. Credits</a></li><li><a href="#14">14. License (CC-BY-NC 4.0)</a></li></ul><header><a name="01"></a><h1>01. Requirements & Setting up</h1></header><div><blockquote><strong>Quick note:</strong> You may note there is what looks like a lot of random capitalization, underlines, bold and grayed out text. This styling is so the reader can visually understand the emphasis put in explanations. The capitalization refers back to certain interfaces or functions within LSDj.</blockquote><h2>Before we start you need the following:</h2><ul class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">A little bit of musical knowledge.
+This guide expects you to be somewhat familiar with how music software works, what music trackers are, what (for example) a &quot;Kick&quot;, &quot;Snare&quot;, &quot;Hihat&quot;, &quot;Bass&quot; and such are. If you are a complete beginner, it is still a great time to play around and experiment! So you are welcome to continue reading, but might run into things that need better understanding of such musical knowledge. For the purposes of the guide we will use the term <span class="underline">note</span> to include semitones/half-steps. If you do not know what that means you can safely ignore this advice.
+I need to add that <strong>ABSOLUTELY <span class="underline">NO</span> MUSIC THEORY IS REQUIRED</strong>.</span></li></ul><ul class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">To know how the <a href="https://www.bbc.co.uk/bitesize/guides/zp73wmn/revision/1">hexadecimal</a> (base 16) numbering system works.
+Instead of counting in the standard decimal system going from 0 to 9 before reaching 10, LSDj will be counting numbers from 0 to F (i.e. 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, A, B, C, D, E, F, 10…). It's bit nerdy but in this way you can store big numbers with just <span class="underline">2 digits</span> (e.g. where FF is actually 256).</span></li></ul><ul class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">An <span class="underline">accurate</span> Gameboy emulator to run LSDj:
+For Windows: Get the latest BGB: <a href="https://bgb.bircd.org/">https://bgb.bircd.org/</a>
+For Mac: Get the latest Sameboy: <a href="https://sameboy.github.io/">https://sameboy.github.io/</a>
+Multiplatform: Get Retroarch: <a href="https://www.retroarch.com/">https://www.retroarch.com/</a> and use Sameboy core.</span></li></ul><ul class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">The latest LSDj rom:
+For this guide please <a href="https://www.littlesounddj.com/lsd/latest/rom_images/develop/"><strong>visit and download the latest dev version</strong></a> (this guide was written based on 9.2.A). The guide may be incompatible in multiple places otherwise. The latest dev version has many more cool features we want compared to the (as of this writing) months old stable 8.5.1 version!
+The latest LSDj rom is otherwise downloadable from <a href="https://www.littlesounddj.com/lsd/latest/rom_images/">https://www.littlesounddj.com/lsd/latest/rom_images/</a>.
+
+About Development (develop/dev) versions:
+Most of the time these releases provide extra cutting edge features and improvements. To check what&#x27;s been added, visit the changelog on the LSDj website! Personally I use the newest development versions most of the time, though when new versions come out I recommend a good practice of giving it a week or two in case of any critical bugs. People usually report these and the developer fixes them!
+
+Also, very important when working with development versions (and in general): <strong>BACKUP OFTEN</strong>!</span></li></ul></div><div><br><figure class="link-to-page"><a href="page2.html"><span class="icon">💾</span>Experimental Mini-guide version (with images only!)</a></figure></div><a name="02"></a><h1>02. Gameboy basics</h1><p>The Gameboy has 4 channels:</p><p><span class="underline">2 pulse channels</span>, mostly for melodies, bass, leads, arps, or kicks/toms.</p><p><span class="underline">1 wave channel</span>, which has the lowest octave, making it good for bass, kicks, and has sample playback.</p><p><span class="underline">1 noise channel</span>, for hihats, snares, cymbals or noisy detuned bass.</p><figure class="image"><a href="01_Song_screen.png"><img src="01_Song_screen.png"/></a><figcaption>Figure 1. Each column is a channel, visible on the Song screen (i.e. PU1, PU2, WAVE, NOI).</figcaption></figure><a name="03"></a><h1>03. Sequencer, the basic controls</h1><p>At first we see the Song screen, with 4 LSDj channels laid out in front of us, labelled on the top!
+The <span class="underline">cursor</span> is the highlighted (orange) thingy which you can move around using the <code>D-pad</code>.</p><p>Here are common controls and button combos you can use to get started. Don't worry about memorizing it all, just keep it handy. We will talk about the right-hand side later!</p><figure class="image"><a href="02_Useful_interactions.png"><img style="width:850px" src="02_Useful_interactions.png"/></a><figcaption>Figure 2. Useful button combinations. The right-hand side shows selection and manipulation commands.</figcaption></figure><p>As you can see, you can switch screens using <code>SELECT</code>+<code>D-pad</code>. The bottom right of the screen shows the <span class="underline">Navigation Map</span>. The highlighted position is where we are right now. Some screens will 'follow' our position, keeping them close when we need them or even appearing during certain conditions!</p><p>Hover your cursor anywhere on the left side (i.e. on the <strong>PU1</strong> column). Pressing <code>A</code> anywhere while on the Song screen will make <span class="underline">Chain</span> <strong>00</strong> appear right under our cursor.</p><h2>&quot;What is a Chain?&quot;</h2><p>So let me explain that in a second. </p><p>For now press <code>SELECT</code>+<code>RIGHT</code> when you have this chain (<span class="underline">Chain</span> <strong>00</strong>) highlighted. It should move you inside it.</p><p>Press <code>A</code> again to make <span class="underline">Phrase</span> <strong>00</strong> appear. Once again go inside it by pressing <code>SELECT</code>+<code>RIGHT</code>.</p><figure class="image"><a href="03_Making_phrases.gif"><img src="03_Making_phrases.gif"/></a><figcaption>Figure 3. Here are the above steps animated. Note the change in the Navigation Map on the bottom-right!</figcaption></figure><p>The screen should look like this:</p><figure class="image"><a href="04_Navigation.png"><img src="04_Navigation.png"/></a><figcaption>Figure 4. The arrows help point out the Phrase number we are in right now, as well as what channel (PU1) and what position on the map.</figcaption></figure><p>Pressing down <code>A</code> while the cursor is in the note column will make a <span class="underline">note</span> with an <span class="underline">Instrument</span> number appear:</p><figure class="image"><a href="05_First_note.png"><img src="05_First_note.png"/></a><figcaption>Figure 5. The note C-2 with Instrument 00 appeared on this Phrase row.</figcaption></figure><p>Inside a <span class="underline">Phrase</span> screen you can fit up to 16 such notes!</p><h2>&quot;OK, so what are Chains and Phrases then?&quot;</h2><p>So a Song has 4 channels, and each channel are a collection of (up to) 191 Chains.
+Now think of Chains as &quot;Music Books&quot;, and Phrases as &quot;Music Sheets&quot;:
+You can place <strong>16</strong> steps of your notes down on the Music Sheet,
+and assort <strong>16</strong> of those sheets in a Music Book.
+These Music Books then get played from start to finish by one of the channels on your Gameboy!</p><p>This container system allows you to prepare longer melodies/sequences and to reuse certain parts/sections when needed!
+It&#x27;s important to keep in mind that <span class="underline">Phrases are shared globally</span>. So if you place Phrase <strong>06</strong> in 8 different Chains and modify it anywhere, then all of them will change to match what you modified!</p><figure class="image"><a href="06_Phrase_edit.gif"><img src="06_Phrase_edit.gif"/></a><figcaption>Figure 6. An example where the last C-4 note is modified to F-4. Editing one Phrase will change all Phrases of the same number.</figcaption></figure><p>If that is not what you wanted to happen, you can use the &quot;Clone&quot; function of LSDj which allows us to easily copy certain containers to a new unique number for creating an altered Phrase. More on that later!</p><a name="04"></a><h1>04. Adjusting our first sound</h1><p>In our Phrase <strong>00</strong> place down around <strong>3-5 notes</strong> into this Phrase. When hovering your cursor over a note, holding <code>A</code> and pressing <code>LEFT</code>/<code>RIGHT</code> adjusts the note by 1 note, and pressing <code>UP</code>/<code>DOWN</code> adjusts the note by 1 octave (i.e. 12 notes)!</p><p>Once you are done, pressing the <code>START</code> button plays your sequence. Pressing <code>START</code> again will stop the player.</p><p>Let&#x27;s go to the Instrument screen by pressing <code>SELECT</code>+<code>RIGHT</code>:</p><figure class="image"><a href="07_Instrument_screen.png"><img src="07_Instrument_screen.png"/></a><figcaption>Figure 7. What you would normally see at the Instrument screen.</figcaption></figure><p>An <span class="underline">Instrument</span> can be any kind of sound you make in any of the channels. It may be bass, a kick drum, some arpeggios or just bleep bloops. Each mentioned would be prepared in a different way, which is what the Instrument screen will help us create!</p><p>The Type of instrument is decided by which channel you place your notes in. PULSE for the two Pulse channels, NOISE for the Noise channel, and WAVE and KIT for the Wave channel.</p><blockquote><p><strong>Quick tip:</strong> Pressing <code>A</code>+<code>A</code> over most of the parameters on the Instrument screen will display a brief tooltip at the top, giving some information about that parameter/setting.</p></blockquote><p>The <strong>ENV.</strong> setting is pretty unusual so let me explain that below so you may get a grasp of how it works.</p><h2>Volume Envelope</h2><p>Pulse and Noise instruments share the same method of adjusting volume—with envelopes! You may use all 3 envelope boxes, or use just one! Let us place our cursor on the first, left most one.</p><p>Hold <code>A</code> and adjust the value using <code>LEFT</code>/<code>RIGHT</code>. This should change the value on the right side of the box. Press <code>START</code> to hear your sequence (i.e. the notes you recently placed) and start adjusting the value again.</p><p>Notice how the lower values (except for 0) make the instrument shorter, while higher values hold the notes longer. That is much like the &quot;release&quot; part of the instrument&#x27;s sound.</p><blockquote><p><strong>Quick tip:</strong> If the notes are so long that the instrument gets cut out by the beginning of the next note, you then have notes too tight to experience the note&#x27;s full range. You may have to remove these notes manually if they prevent the intended sound as they are too close to each other.</p></blockquote><p>So now we know that the value on the right side of the box is the &quot;release&quot;, what about the left value?</p><p>Adjusting the left value by holding <code>A</code> and pressing <code>UP</code>/<code>DOWN</code> will result in adjusting the initial volume. So the lower values create a quieter instrument, and the higher values make the instrument louder.</p><p>In summary, each envelope is made out of two parameters. The left value is <span class="underline">volume/amplitude</span> and the right value is the <span class="underline">speed/time to the next upcoming volume/amplitude</span> value!</p><p>Our 3 envelope boxes can now be understood in this representation:
+<figure class="image"><a href="08_Amplitude_envelopes.png"><img src="08_Amplitude_envelopes.png"/></a><figcaption>Figure 8. The second and last box is zero in this case. Note that zero speed as a value is used for hold/sustain.</figcaption></figure></p><p>The volume goes down to 0 each time because of the volume value in the second box. This means, from the figure above, that our instrument will start at Volume 8, and with Speed 8 it will decrease to Volume 0, which is at the next envelope box!</p><figure class="image"><a href="09_Envelope_volumes.png"><img src="09_Envelope_volumes.png"/></a><figcaption>Figure 9. This shows the waveforms/loudness of our Pulse instrument, labelled with their parameters. The bigger the waveform, the louder the instrument is. In later LSDj versions there is a small display that shows the waveform shape. 
+<strong>Note: One of these examples is wrong.</strong> Can you tell which one?</figcaption></figure><p>Let us look at the last waveform (i.e. <strong>[18][C5][0-]</strong>) of Figure 9.</p><p>It starts with Volume 1 and increases it's volume to Volume C at Speed 8. Once it gets to Volume C it decreases it's volume to Volume 0 at Speed 5. This means if we want to create an instrument that starts quiet and gets louder, we will need to start with Volume 0 in the first envelope box and have a higher Volume value in the next envelope box! An example would be something like <strong>[07][88][--]</strong>.</p><p>If you want the sound to keep going (i.e. to <span class="underline">sustain/hold</span> it) then set the Speed value to Speed 0, making the instrument keep the Volume value until we interrupt it in another way!</p><p>There you go! It is quite a lot to take in, but this should allow you to shape the volume of your pulse/noise instruments however you fancy, in any number of envelope boxes you like!</p><h3>"What about the rest of the Instrument screen parameters?"</h3><p>Most should be self explanatory, though if in doubt you may press <code>A</code>+<code>A</code> for a quick tip! The most confusing parameters would be SWEEP, PITCH, and TABLE. We will get to all these a bit later!</p><h2>Navigating around the Chain/Phrases/sequences</h2><p>So let us do some quick Phrase navigation. Visit the Chain screen and place down more Phrases. Kind of like what is done in Figure 10 below:</p><figure class="image"><a href="10_Phrase_navigation.png"><img src="10_Phrase_navigation.png"/></a><figcaption>Figure 10. An example of multiple Phrases in a Chain. We will be placing notes in them!</figcaption></figure><p>After a while, it becomes pretty tiresome to <code>SELECT</code>+<code>RIGHT</code> then <code>SELECT</code>+<code>LEFT</code> for each of these Phrases while you are editing. So instead, while inside any of these Phrases, you can simply scroll <code>UP</code>/<code>DOWN</code> between each of these by moving the cursor over the upper/lower edges of the phrases to move to the previous/next phrase in a chain!</p><figure class="image"><a href="11_Phrase_navigation.gif"><img src="11_Phrase_navigation.gif"/></a><figcaption>Figure 11. While on a Phrase screen you may use the cursor to scroll between Phrases of the same Chain. Note the CPx value top-right.</figcaption></figure><h2>How to Select, Copy and Paste</h2><p>This section will show some (but not all) practical usage of these functions. So keep in mind that you can apply these methods to many different situations!</p><h3>Copy/Paste an entire Phrase for creating an altered Phrase</h3><p>Instead of placing new notes, scroll to your Phrase <strong>00</strong> where you got some notes placed. and while <span class="underline">holding</span> <code>SELECT</code> press <code>B</code> three (×3) times. This should highlight the entire phrase. Now without holding <code>SELECT</code>, press <span class="underline">only</span> <code>B</code> <strong>once</strong>. This should copy what you selected (i.e. the entire phrase) into the buffer.</p><p>Scroll down to your new and empty phrase and place your cursor where your pasted content should start. Then paste what you copied earlier by holding <code>SELECT</code>+<code>A</code>. Notice that it is the same as copying, but with <code>A</code> instead.</p><blockquote><strong>Quick tip:</strong> While using Copy/Paste/Cut actions, newer versions of LSDj will display a tooltip at the top of the screen to help inform what is happening. Still unsure? Refer to the right side of <strong>Useful Button Combinations</strong> (Figure 2). You even get a button combo for <span class="underline">cut</span>ting selections too!</blockquote><h3>Copy/Paste a custom selection</h3><p>Place the cursor at the start of your selection. Now hold <code>SELECT</code>+<code>B</code>. You are now in custom selection mode! Use your <code>D-pad</code> to move around and highlight a few rows of your notes and instruments. Let us go with at least <strong>two notes</strong> highlighted this way. Press <code>B</code> now to finish your selection and copy it to the buffer. Move your cursor a few rows below and paste (i.e. <code>SELECT</code>+<code>A</code>) what you have copied, shifting the phrase:</p><figure class="image"><a href="12_Custom_selection.gif"><img src="12_Custom_selection.gif"/></a><figcaption>Figure 12. An example of the process of a custom selection.</figcaption></figure><p>Boom, we now have a variation of the first phrase!</p><h2>Where you press <code>START</code> matters!</h2><p>Make sure that all phrases contain some notes for our next demonstration. Now press <code>START</code> at the top of the screen to start the playback!</p><p>Notice the following:
+Pressing <code>START</code> in <span class="underline">a Phrase screen</span> plays only the currently viewed Phrase, and nothing else.
+Pressing <code>START</code> in <span class="underline">a Chain screen</span> makes the currently viewed Chain play, which includes each phrase of that Chain.
+Pressing <code>START</code> on <span class="underline">the Song screen</span> will make the whole song play the Chains that follow each other.</p><blockquote><strong>Extra credit:</strong> What happens if there are gaps in the Song screen? What happens if <code>START</code> is pressed anywhere that is not at the top of a screen? (Check near the end of this guide to know how to fill gaps in the sequencer.)</blockquote><a name="05"></a><h1>05. Understanding &quot;Commands&quot;</h1><p>Let us revisit one of your Phrase screens. The right-most CMD column is for commands. Pressing <code>A</code> twice on the left side (i.e. the first spot) of this column while adjusting it's value will give a quick tooltip of what that current command does. As commands start with a letter in this part of the column, they are mostly easy to familiarize with!</p><p>Put down one to two <span class="underline"><strong>P</strong></span>itchbend commands. Notice how <span class="underline">positive</span> ranges are from <strong>01-7F</strong>, while <span class="underline">negative</span> ones go from <strong>FF-80</strong> (where <strong>FF</strong> is the equivalent of <strong>-1</strong>). Set these to whatever values you like, though no larger than 20 values apart to avoid a laserbeam sounding quality 😉</p><p>Also place down a few <span class="underline"><strong>C</strong></span>hord commands a bit away from our Pitchbend commands, so that we can hear these chords without pitch sliding. <span class="underline"><strong>C</strong></span>47 is equivalent to a Major Chord, and <span class="underline"><strong>C</strong></span>37 a Minor Chord. More chords (sometimes called arpeggios/arps) can be made as seen in Figure 13 below.</p><figure class="image"><a href="13_LSDj_Chords.png"><img style="width:850px" src="13_LSDj_Chords.png"/></a><figcaption>Figure 13. Notice that Hex Notes specify the Interval positions if you start counting from 0. This means that Hex Notes are essentially the same as Scale Notes in this regard. Source: <a href="https://chipmusic.org/forums/topic/15949/lsdj-chord-cheat-sheet/">LazierGunz on Chipmusic.org forums</a>.</figcaption></figure><p>To adjust the settings on the fly, press <code>START</code> then go back to the Instrument screen. Adjusting the <strong>PITCH</strong> parameter will affect how the <strong>P</strong>itchbend command behaves, and adjusting <strong>CMD/RATE</strong> will slow down your <strong>C</strong>hord commands.</p><blockquote><strong>Quick tip:</strong> There's a list of the commands found in LSDj's Help screen, under the Project screen.</blockquote><figure class="image"><a href="14_Command_List.png"><img src="14_Command_List.png"/></a><figcaption>Figure 14. The Command List, found under Project screen > Help. The Help screen notes what version of LSDj is running, and also documents the button combinations possible in each screen.</figcaption></figure><a name="06"></a><h1>06. Let&#x27;s make some noise in the NOISE CHANNEL!</h1><p>On the same row your Pulse melody is create a new chain in the Noise (a.k.a. NOI) column. Move your cursor into the chain, add a new phrase (and inside it, a note using a new instrument). Make sure the instrument number is not the same as what you used for the pulse channel—we do not want to mess that up!</p><p>A good way to quickly bring up the closest available and free instrument/phrase/chain/etc. number is to press <code>A</code> twice. So do that now and press <code>A</code>+<code>A</code> on the instrument row to create a new instrument number there.</p><figure class="image"><a href="15_Noise_phrase.png"><img src="15_Noise_phrase.png"/></a><figcaption>Figure 15. A Phrase screen showing a mix of white noise and metallic noise. Copying the notes from this figure while using the default noise instrument will give you a feeling of how Kicks, Hihats and Snares sound respectively.</figcaption></figure><p>Hold <code>A</code>+<code>LEFT</code>/<code>RIGHT</code> while on the note column to listen to the range of available sounds. You should quickly notice how it is split into two types of sound: <span class="underline">white noise</span> where there is a 2 digit value (e.g. like notes 39, 2B and 3A in Figure 15) and <span class="underline">metallic noise</span> where it is an actual note pitch with an octave (i.e. note D 0 in Figure 15).</p><p>Using a single instrument for Kicks, Hihats and Snares will not usually bring the best results. It will give you more control and flexibility over each instrument's sound and is far less confusing if we make a separate instrument for each.</p><blockquote> <strong>Quick tip:</strong> To prevent future confusion with your instruments, it is also extremely helpful to name your instruments from the start. You do not want to end up modifying an instrument wrongly and giving yourself double the work later. <em>If you are lazy like me, just place the first letter for the instrument name (e.g. <strong>B</strong>ass, <strong>L</strong>ead, <strong>K</strong>ick, <strong>S</strong>nare, <strong>H</strong>ihat and so on.</em></blockquote><h2>Let&#x27;s make them sound cool</h2><p>This section should help you understand how to approach sound design in LSDj a bit better. We will continue to refer back to Figure 15 as we step through each noise instrument.</p><p>Naturally a <strong>H</strong>ihat (INSTR 02) should be short, snappy and high pitched. Setting the envelope to <strong>[75][00][--]</strong> sounds good for me, along with the <strong>R</strong>02 command.</p><blockquote> <strong>Extra tip:</strong> Phrases may have different variations concerning pitch, sound and volume (e.g. notice how 3A is slightly quieter). With this instrument (INSTR 02) you may also create <strong>C</strong>ymbals by using a high metallic noise note like C 7!</blockquote><p>The noise <strong>K</strong>ick (INSTR 03) has to be played loud so I set the envelope to <strong>[F4][00][--]</strong>. The longer release time allows this kick to make other sounds too because of the <strong>P</strong> command, which may be troublesome later. Though a shorter release takes the punch out of the kick, making it feel weak.</p><p>I have chosen note D 0 for my kick. It sounds punchy with the current <strong>P</strong> command next to it. Higher notes make it sound a bit like a kick+snare, and well personally, I find the metallic noise to carry more punch to noise kicks!</p><p><strong>S</strong>nare (INSTR 04) by itself sounds good already with default <strong>[88][00][--]</strong> envelope, I just changed the volume to 9 (as shown in Figure 16) for more punch. To put more detail into it we are going to use this instrument to explain an important LSDj function: Tables.</p><a name="07"></a><h1>07. "Well, well, well. How the turn-TABLES…"</h1><p>Visit the Instrument screen and select a Table by pressing <code>A</code>+<code>LEFT</code>/<code>RIGHT</code> (for this guide, to Table <strong>00</strong>). Then press <code>SELECT</code>+<code>RIGHT</code> to navigate to the Table screen. What you see looks like a rather big Phrase screen with two Command columns and a Transpose column. You are not wrong, though it is more of a mini-Phrase screen that runs at full speed or 1 row per tick.</p><figure class="image"><a href="16_Snare_settings.png"><img src="16_Snare_settings.png"/></a><figcaption>Figure 16. The left side shows the volume envelope set to Volume 9 with Table <strong>00</strong> selected. The right side shows the resulting snare Table.</figcaption></figure><p>Wait, what are ticks? (The VOL column we will explain later. It is a neat side feature when using tables.)
+<span class="underline"><strong>Ticks</strong></span> are a unit of speed in LSDj. The table sequence advances every 6 ticks by default, so during one Phrase row you may modify up to 2 parameters (i.e. those two CMD columns) at the same time 6 times! Tables offer plenty of ways to shape our instruments. The left side of Figure 16 shows one way we can shape the snare we created.</p><h2>Breakdown of the snare table we created</h2><p>We start with alternating pan commands, making our snare feel wide on the speakers, popping it out nicely.</p><p>The numbers in the <strong>Transpose column</strong> (TSP) will shift the pitch up/down per that particular step relative to the note played in the Phrase. I decided to raise it in the beginning, as this is how real snares sound like. It also makes it stand out more compared to other instruments.</p><p>The note played with the <span class="underline"><strong>V</strong></span>ibrato command in this case will start going up in pitch, yet slow enough where we would not hear this vibrato coming back down.</p><p>The <span class="underline"><strong>P</strong></span>itchbend command bends the pitch downwards, further shaping our snare nicely while the <strong>V</strong>ibrato command is still actively going upwards. <mark class="highlight-gray"><em>(Sidenote: One may think that these commands could be replaced with a single <span class="underline"><strong>P</strong></span>01 or <span class="underline"><strong>P</strong></span>02. The sound produced is similar but still different.)</em></mark></p><p>We end our table using <span class="underline"><strong>A</strong></span>20. This command will jump to the designated table. But there are only 1F tables. So <span class="underline"><strong>A</strong></span>20 is effectively impossible and regarded as "no table". This will stop our active table from scrolling through commands, yet will allow each active effect (like Vibrato or Pitchbend) to continue playing.</p><p>If you have recreated the table in Figure 16, you should be able to hear how amazing tables are and that they can give instruments any detail and personality you want!</p><p><mark class="highlight-gray"><em>(Another sidenote: If we revisit the noise <strong>K</strong>ick instrument we made previously, we could pack <span class="underline"><strong>P</strong></span>F0 into it's own table to add a small level of detail—but for our purposes it is good enough as it is.)</em></mark></p><a name="08"></a><h1>08. Working with Instruments</h1><p>While recreating Figure 15, you may have wanted a quicker way to browse your instruments. Turns out, there is a way to quickly switch between your Snare, Hihat, Kick or Pulse instruments without leaving the Instrument screen. You do so by holding <code>B</code>+<code>LEFT</code>/<code>RIGHT</code> (the cursor can be anywhere). In the later versions of LSDj you may run into INSTR 40, an instrument you never initialized. This instrument is reserved for speech, and well, you do not need to worry about it for now.</p><p>You may have also been wondering if there is a fast way to hear how all of the instruments sound like together without having to listen to the whole song each time. So in the Song screen, just ensure that there is a row with more than a single chain placed (so one on PU1 and one on NOI, for our example). Pressing <code>SELECT</code>+<code>START</code> starts playback across all possible channels from anywhere that is <strong>not</strong> the Song screen! Refer back to the section <strong>Where you press <code>START</code> matters!</strong> for details about using <code>START</code> in LSDj.</p><a name="09"></a><h1>09. Creating your first WAV KICK</h1><h2>Sampled or Synthesized?</h2><p>The WAV channel offers us two types of instruments to work with, which we may select under TYPE on the Instrument screen: <strong>KIT</strong> or <strong>WAVE</strong>.</p><p><span class="underline"><strong>KIT</strong></span> allows us to play samples. We can not directly pitch them, yet is recommended for all kinds of drum samples and one-shot chants or drops.</p><p><span class="underline"><strong>WAVE</strong></span> allows us to freely create our own choices of melodic sound: be it Lead, Bass, Drums, and even funny dubstep sounds.</p><p>We will explain the KIT way first, then the WAVE way.</p><h2>The easy drumKIT way (Sampled)</h2><p>After setting a new instrument to <strong>KIT</strong> we will see that we get two kits on the Instrument screen. We also get an extra column on the Phrase screen, meaning we can play <span class="underline">2 different samples at once</span>!</p><p>Placing notes on the Phrase screen will display the names of the samples from these kits. Setting both kits to the same type allows you to play the same sound twice and louder <mark class="highlight-gray"><em>(which also probably triggers the DIST parameter, which we will explain more about later)</em></mark>.</p><h2>That's it for the easy drumKIT way!</h2><p>The rest of the guide goes into detail about WAVE mode, and there is quite a lot of in-depth information as it is a most versatile and powerful function in LSDj.</p><p><strong>From here on out, you are already prepared to make your own songs.</strong> Apart from understanding WAVE mode better, you should now have a solid understanding on creating songs with LSDj. So feel free to experiment and take it on when you feel ready.</p><h2>Ride the WAVE! (Synthesized)</h2><p>So let us make a WAV kick. Start by placing down a high octave note, and create a new instrument on the first row of a phrase. Hold <code>SELECT</code>+<code>B</code>, select the first 4 rows and copy them with <code>B</code>. Then hold <code>SELECT</code> and press <code>A</code> until the whole phrase is filled with 4/4 kick.</p><p>Playback will give you a squeaky saw wave. Let us assign the pitch slide to it…though not in the phrase, but assigned to the instrument in a Table.</p><figure class="image"><a href="17_Wave_kick.png"><img src="17_Wave_kick.png"/></a><figcaption>Figure 17. Table 01 shows a pitch slide that we will assign to our WAV kick instrument.</figcaption></figure><p>As seen in Figure 17, <span class="underline"><strong>P</strong></span> command with value around D0 should do the trick. Notice that if we try to place notes in the lower octaves the pitch wraps back to the highest octave creating an unwanted sound. We can prevent that by setting <strong>PITCH</strong> to DRUM on the Instrument screen (with <code>A</code>+<code>UP</code>/<code>DOWN</code>). This way the pitch will stay at the shortest amount of time in it's highs, while slowing down close to it's lows. You should immediately hear the difference!</p><p>As we want to end our kick before any potential bass starts playing, we place a <span class="underline"><strong>K</strong></span>00 around step 6 on the table to finish the kick quicker.</p><a name="10"></a><h1>10. Sound synthesis</h1><h2>SYNTH vs WAVE, Sound synthesis part 1</h2><p>Right now our Kick doesn't sound like a proper kick yet. The default Saw wave is not the best waveform for that. Considering how the WAV channel can have custom waveforms, it is certain that we can find a good one for our kick!</p><p>From the Instrument screen we navigate upwards, finding ourselves on the Synth screen. Pressing <code>SELECT</code>+<code>RIGHT</code> will show us the Wave screen. Both of these are great tools that deal with waveforms.</p><figure class="image"><a href="18_Synth_vs_Wave.png"><img src="18_Synth_vs_Wave.png"/></a><figcaption>Figure 18. The Synth screen on the left shows the settings we will use for our WAV kick. We also see what the Wave screen looks like on the right.</figcaption></figure><p>The <span class="underline"><strong>Wave screen</strong></span> allows us to navigate around the whole collection of waves while holding <code>B</code>+<code>D-pad</code> (LSDj can have up to FF per song). You may also edit every wave manually in terms of shape on this screen.</p><p>The <span class="underline"><strong>Synth screen</strong></span> groups those waves into it's own chunks of 16 (i.e. from 0 to F as shown in the wave row of the Wave screen) and tries to synthesize a sound between the beginning and end of the waveform. So the left side of each parameter represents the first frame of your instrument (or waveform), and the right side the last one. LSDj will fill the gap between these values automatically for us.</p><p>My settings on the Synth screen in Figure 18 shows what I do for a good kick. Provided you followed me step-by-step, you should be able to hear a good kick now. Fantastic! <mark class="highlight-gray"><em>(We will go through the Synth screen parameters after Sound Synthesis part 2.)</em></mark></p><h2>WAV BASS, Sound synthesis part 2</h2><p>Because the WAV channel can go much lower in pitch compared to the pulse channels, it is also the best channel for bass. So let us make a bass here!</p><p>Create a new instrument by pressing <code>A</code>+<code>A</code> on the instrument column. Place new notes between the kicks and sequence them out nicely, with at least 6 total notes in the phrase. Go to the Instrument screen of our bass and switch <span class="underline"><strong>PLAY</strong></span>back mode to <strong>ONCE</strong>, <strong>LOOP</strong> or <strong>PINGPONG</strong>. With this we take full advantage of LSDj synth power!</p><p>If you created the WAV Kick from our previous steps, and while using the same synth number for the bass you should hear a sine wave and some modulation happening, going beyond the first wave that is used for Kick. With this you can play around with the <strong>SPEED</strong> and <strong>LENGTH</strong> settings. Since we use the same Synth settings for our Kick we <span class="underline">should not change</span> any settings here as we want to keep our Kick sound intact!</p><blockquote><strong>Quick tip:</strong> After finalizing your Bass instrument settings you can change the synth number to the next value to hear the default basic saw wave again as comparison.</blockquote><h2>&quot;What do the Synth screen parameters do?&quot;</h2><p>In short, the LSDj synth tries to simulate an <span class="underline">analog synthesizer</span>.</p><p>The <strong>Cutoff</strong> and <strong>Q</strong> settings are Filter elements, which our <strong>Signal</strong> (waveform/oscillator) <span class="underline"><em>goes through</em></span>! <mark class="highlight-gray"><em>(Don't worry about W.Fx in Signal for now.)</em></mark></p><p>The <strong>Phase</strong> setting allows for easy PWM modulation, though the results depend on which Phase setting you have set.
+The <strong>Vshift</strong> setting moves the signal up, which is good for triggering the DIST.
+The <strong>Limit</strong> setting helps to precisely lower the actual volume of your instrument to fit the song.</p><p>You may experiment with the settings above while having your instrument in <strong>LOOP</strong>/<strong>PINGPONG</strong>. It helps to make sure it starts back again or reverses back to the beginning, and to ensure that you can hear the whole thing!</p><h2>DIST (distortion) modes</h2><p>The DIST mode decides what happens with our wave when it goes beyond it's max values.</p><p><strong>CLIP</strong> will make the waveform stay at the max position (where it is).
+<strong>FOLD</strong> will make points of the waveform bounce back and "mirrors" it.
+<strong>WRAP</strong> will pass through or wrap around to appear on the opposite side while still moving onwards.
+</p><figure class="image"><a href="19_Distortion_modes.gif"><img src="19_Distortion_modes.gif"/></a><figcaption>Figure 19. Here you can see how some of the distortion modes affect the waveform.</figcaption></figure><h3>Extra tips while working with DIST</h3>
+Adjusting the <strong>Q</strong> value won't make much difference to the sound until you adjust the <strong>Cutoff</strong> settings.</li><li>Values above Volume <strong>20</strong> trigger DIST (which may be what you need).</li><li>Going above Limit <strong>0F</strong> does not bring good results easily.</li><li>Instrument <strong>LENGTH</strong> basically shrinks your selected synth down by skipping waves.</li><li>Instrument <strong>SPEED</strong> and <strong>LENGTH</strong> values can be adjusted in the Phrase too, with the <span class="underline"><strong>W</strong></span>ave command.</li></ul><a name="11"></a><h1>11. &quot;Can I make music now?&quot;</h1><h2><strong><em>Yes!</em></strong></h2><figure class="image"><a href="20_All_ready.png"><img src="20_All_ready.png"/></a><figcaption>Figure 20. We finally have something going on here. You got this.</figcaption></figure><h2>Some final notes</h2><p>Here are some extra things to think about that you may find useful to know while working in LSDj.</p><h3>Quick phrase cloning</h3><p>To quickly create a copy of the phrase, hover your cursor over the chain number on the Song screen and hold <code>SELECT</code>, then press <code>B</code> and then <code>A</code>. The chain number should increase, and all the phrases inside should also have new numbers. Note that this replaces the chain number at the cursor, so it saves you time from having to manually copy it there. <strong>You can use this button combination to clone a lot of things.</strong></p><h3>Filling the gaps in the sequencer</h3><p>You probably do not want your sounds to always start at the same time, and you may want to delay chains to start later. To keep the sequencer or song playback going it still has to be triggered from the start of the song. One way to solve this is to insert chains with empty phrases inside, like we have shown in Figure 21:</p><figure class="image"><a href="21_Gap_filling.png"><img src="21_Gap_filling.png"/></a><figcaption>Figure 21. Here is one of my songs. Note how <span class="underline">7E</span> and <span class="underline">7D</span> appear often in various channels during the song. They serve as <strong>silent chains</strong> so the song playback knows to keep going/playing. 7E works as a short bridge silence, and 7D as a full length chain silence!</figcaption></figure><p>I chose the last available values so I both know where they are and also will not overwrite them by accident in future. 7F is used for chains, and FE is used for the empty phrases inside. Inside such dummy chains I place the same amount of phrases like in any other chains of the song, so there will not be any hiccups as everything will be in sync no matter where I press <code>START</code>.</p><h3>Tempo control</h3><p>If you want to make your song play faster or slower, then adjust the Tempo parameter at the top of the Project screen.</p><p>Notice how all your modulations go in sync together with a tempo increase/decrease: this means all the tables, arpeggios (or <span class="underline"><strong>C</strong></span>hords) and retriggers (<span class="underline"><strong>R</strong></span>etrig). Changing tempo can absolutely affect the sound design you made previously. It is usually fixed with a small adjustment, so it is not normally an issue. Just something which will happen that you need to be aware of.</p><h3>Available space</h3><p>Each project takes up a certain amount of blocks. If you are near your limit of free space, <strong>CLEAN SONG DATA</strong> from the Project screen will <span class="underline">remove all chains and phrases that are not placed on the Song screen</span>. That means any unused sequences will again return to you with <code>A</code>+<code>A</code>. And don't panic, it will not harm your composition as long as the chains/phrases have been placed somewhere on your Song screen.</p><h3>"What about older LSDj tutorials and old LSDj versions?"</h3><p>You may find some LSDj tips & tricks written years ago (LSDj is over 20 years old!) where things look different in terms of interface or function. As an example we can simply compare the latest current stable release (v8.5.1) and notice how notes placed in the noise channel follow a different pattern. Or how the volume envelope (previously and confusingly called "ADSR") could only go up to a certain level. Even older versions had a completely different Synth screen. There are many more such differences in previous versions.</p><p>I believe old tutorials can still be useful today, but you may sometimes have to look for a way to translate or adapt some of the tricks from any older versions. In some cases things have been made easier in the later versions—it goes both ways!</p><a name="12"></a><h1>12. Where to learn more</h1><h2>On the main <a href="https://www.littlesounddj.com/">LSDj site</a></h2><p>You'll find the LSDj manual in PDF format. The manual describes all the functions inside LSDj, and that includes ones we skipped to keep this guide from becoming overwhelming. Now that you have a better grasp of how LSDj works, it will be easier (and recommended) to learn the rest from the manual.</p><h2>Other guides/videos</h2><p>There are plenty of advanced guides/videos explaining fancy techniques that you might find super helpful.</p><h2>Chiptune communities</h2><p>Also feel free to join Chiptune communities like the <a href="https://abitofchiptune.com/">ABOC</a>, <a href="https://puwulsewave.gay/">pUwUlsewave</a> and <a href="https://geekbeatradio.com/">GeekbeatRadio</a> in order to meet and talk with other LSDj folk!</p></div><div><div class="nospace"><a name="13"></a><h1>13. Credits</h1>
+<!-- Start credit -->
+	<h2>INFU</h2>
+	<p>Yo, that's me! Wrote and planned whole guide!</p>
+	<ul>
+		<li><a href="http://infu.fyi">Main website, with more guides, music, nerd stuff</a></li>
+		<li><a href="https://twitter.com/Infu_av">Twitter, where I post updates often</a></li>
+	</ul>
+<!-- End credit -->
+<!-- Start credit -->
+	<h2>Torsten Hansson</h2>
+	<p>Incredible guide rewording/redesign that made it look as awesome as it does now!</p>
+	<ul>
+		<li><a href="https://evnh.com/">Main website</a></li>
+	</ul>
+<!-- End credit -->
+<!-- Start credit -->
+	<h2>probskay</h2>
+	<p>Going through the guide, learning trackers for the first time, and provided tons of feedback!</p>
+	<ul>
+		<li><a href="https://justmynarratives.com">Main website</a></li>
+		<li><a href="https://twitter.com/idoldestroyer">Twitter</a></li>
+	</ul>
+<!-- End credit -->
+<!-- Start credit -->
+	<h2>Johan Kotlinski</h2>
+	<p>Developing LSDj, updating it while keeping in mind both advanced and new users!</p>
+	<ul>
+		<li><a href="https://www.littlesounddj.com">Main Website</a></li>
+	</ul>
+<!-- End credit -->
+<!-- Start credit -->
+	<h2>All various volunteers from pUwUlsewave, ABOC</h2>
+	<p>for their kind words and feedback!</p>
+<!-- End credit -->
+</div><a name="14"></a><h1>14. License (CC-BY-NC 4.0)</h1><p>Shield: <a href="https://creativecommons.org/licenses/by-nc/4.0/" rel="nofollow"><img src="https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg" alt="CC BY-NC 4.0"></a></p><p>This work is licensed under a <a href="https://creativecommons.org/licenses/by-nc/4.0/" rel="nofollow">Creative Commons Attribution-NonCommercial 4.0 International License</a>.</p><p><a href="https://creativecommons.org/licenses/by-nc/4.0/" rel="nofollow"><img src="https://licensebuttons.net/l/by-nc/4.0/88x31.png" alt="CC BY-NC 4.0"></a></p></div></article></body></html>
