@@ -21,6 +21,31 @@ body {
 	}
 }
 
+@media (prefers-color-scheme: dark) {
+    body {
+		background:  #222;
+		color: #DDD;
+	}
+
+	.code,code {
+		background: rgba(135, 131, 120, 0.428);
+	}
+
+	code {
+		color: orange;
+	}
+}
+
+@media (prefers-color-scheme: light) {
+	.code,code {
+		background: rgba(135, 131, 120, 0.15);
+	}
+
+	code {
+		color: #eb5757;
+	}
+}
+
 body {
 	line-height: 1.5;
 	white-space: pre-wrap;
@@ -373,16 +398,11 @@ p {
 
 .code,
 code {
-	background: rgba(135, 131, 120, 0.15);
 	border-radius: 3px;
 	padding: 0.2em 0.4em;
 	border-radius: 3px;
 	font-size: 85%;
 	tab-size: 2;
-}
-
-code {
-	color: #eb5757;
 }
 
 .code {
